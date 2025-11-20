@@ -1,14 +1,14 @@
-package main;
+package Main;
 
-import View.HarcosVarazslo;
-import Model.HarcosVarazsloModel;
 import Controller.HarcosVarazsloControl;
+import Model.HarcosVarazsloModel;
+import View.HarcosVarazslo;
 
 public class Indito {
+
     public static void main(String[] args) {
-        HarcosVarazslo nezet=new HarcosVarazslo();
-        HarcosVarazsloModel model=new HarcosVarazsloModel();
-        new HarcosVarazsloControl(nezet,model);
-        nezet.setVisible(true);
+        HarcosVarazsloModel.GameModel model = new HarcosVarazsloModel.GameModel();
+        HarcosVarazslo gui = new HarcosVarazslo();
+        new HarcosVarazsloControl(gui, model);
     }
 }

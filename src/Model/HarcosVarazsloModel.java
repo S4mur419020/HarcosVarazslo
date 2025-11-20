@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class HarcosVarazsloModel {
 
-    public class GameModel implements Serializable {
+    public static class GameModel implements Serializable {
 
         private static final long serialVersionUID = 1L;
 

@@ -9,8 +9,8 @@ public class HarcosVarazsloControl {
     private HarcosVarazsloModel.GameModel model;
     private HarcosVarazslo gui;
 
-    public HarcosVarazsloControl(HarcosVarazslo nezet, HarcosVarazsloModel model1) {
-        this.model = model;
+    public HarcosVarazsloControl(HarcosVarazslo nezet, HarcosVarazsloModel.GameModel model1) {
+        this.model = model1;   // ← HIBA JAVÍTVA
         this.gui = nezet;
 
         gui.addLepesAction(e -> leptet());
