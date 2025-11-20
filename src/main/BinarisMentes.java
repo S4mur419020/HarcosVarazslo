@@ -1,0 +1,71 @@
+package main;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class BinarisMentes {
+
+    private Karakter karakter;
+    private final String fn="karakter_3.bin";
+    
+    public static void main(String[] args) {
+        BinarisMentes prg = new BinarisMentes();
+        prg.letrehozas();
+        prg.mentes();
+        /* mentés után kikapacsolom a gépet, ld mentes() */
+        prg.betoltes();
+    }
+
+    public void letrehozas() {
+        karakter = new Karakter("Kübli", "harcos", 1);
+        System.out.println("id: "+karakter.getId());
+        karakter.felvesz(new Targy("Fejsze"));
+        karakter.setId();
+        System.out.println("id: "+karakter.getId());
+        
+    }
+    
+    public void mentes() {
+        try (FileOutputStream fajlKi = new FileOutputStream(fn);
+            ObjectOutputStream objKi = new ObjectOutputStream(fajlKi);) {
+            objKi.writeObject(karakter);
+            /* ha a try () részben AutoCloseable, itt: ObjectOutputStream,
+            akkor nem kell explicit close() */
+            //objKi.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(BinarisMentes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BinarisMentes.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            /* mindig lefut: */
+            System.out.println("mentés után: ");
+            System.out.println(karakter);
+            System.out.println("kikapcsolás után: ");
+            karakter = null;
+            System.out.println(karakter);
+        }
+    }
+
+    private void betoltes() {
+        try (FileInputStream fajlBe = new FileInputStream(fn);
+            ObjectInputStream objBe = new ObjectInputStream(fajlBe);) {
+            karakter = (Karakter) objBe.readObject();
+            karakter=setId();
+            System.out.println("betöltés után: ");
+            System.out.println(karakter);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(BinarisMentes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BinarisMentes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BinarisMentes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
